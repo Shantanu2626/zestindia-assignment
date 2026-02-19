@@ -1,7 +1,7 @@
 package com.zestindia.product.exception;
 
-public class ResourceNotFoundException extends RuntimeException{
-    public ResourceNotFoundException(String message) {
+public class ProductNotFound extends RuntimeException{
+    public ProductNotFound(String message) {
         super(message);
     }
 }
