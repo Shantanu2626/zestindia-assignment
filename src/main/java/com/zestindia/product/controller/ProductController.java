@@ -1,5 +1,6 @@
 package com.zestindia.product.controller;
 
+import com.zestindia.product.dtos.ItemResponseDTO;
 import com.zestindia.product.dtos.ProductRequestDTO;
 import com.zestindia.product.dtos.ProductResponseDTO;
 import com.zestindia.product.dtos.ProductUpdateDTO;
@@ -8,7 +9,6 @@ import com.zestindia.product.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,5 +56,10 @@ public class ProductController {
     public ResponseEntity<String> deleteProduct(@PathVariable Long id){
         productService.deleteProduct(id);
         return new ResponseEntity<>("Product deleted successfully" , HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/items")
+    public ResponseEntity<List<ItemResponseDTO>> getItemsByProductId(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.getItemsByProductId(id));
     }
 }
