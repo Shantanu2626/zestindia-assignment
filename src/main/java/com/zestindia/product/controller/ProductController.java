@@ -5,8 +5,10 @@ import com.zestindia.product.dtos.ProductResponseDTO;
 import com.zestindia.product.dtos.ProductUpdateDTO;
 import com.zestindia.product.model.Product;
 import com.zestindia.product.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +25,8 @@ public class ProductController {
 
     // Save the product in database
     @PostMapping("/saveproduct")
-    public ResponseEntity<Product> saveProduct(@RequestBody ProductRequestDTO productRequestDTO){
-        Product product = productService.addProduct(productRequestDTO);
+    public ResponseEntity<ProductResponseDTO> saveProduct(@Valid @RequestBody ProductRequestDTO productRequestDTO){
+        ProductResponseDTO product = productService.addProduct(productRequestDTO);
         return new ResponseEntity<>(product,HttpStatus.OK);
     }
 
@@ -44,7 +46,7 @@ public class ProductController {
 
     //This controller created for updating the product
     @PutMapping("{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id , @RequestBody ProductUpdateDTO dto){
+    public ResponseEntity<Product> updateProduct(@Valid @PathVariable Long id , @RequestBody ProductUpdateDTO dto){
         Product product = productService.updateProduct(id , dto);
         return new ResponseEntity<>(product , HttpStatus.OK);
     }

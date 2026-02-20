@@ -1,12 +1,17 @@
 package com.zestindia.product.service;
+import com.zestindia.product.dtos.ItemResponseDTO;
 import com.zestindia.product.dtos.ProductRequestDTO;
 import com.zestindia.product.dtos.ProductResponseDTO;
 import com.zestindia.product.dtos.ProductUpdateDTO;
 import com.zestindia.product.exception.ProductNotFound;
 import com.zestindia.product.mapper.Mapper;
+import com.zestindia.product.model.Item;
 import com.zestindia.product.model.Product;
 import com.zestindia.product.repository.ProductRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +31,25 @@ public class ProductService {
 
 
     //Adding product in database
-    public Product addProduct(ProductRequestDTO productdto){
+    public ProductResponseDTO addProduct(ProductRequestDTO productdto){
         Product product = new Product();
         product.setId(productdto.getId());
         product.setProductName(productdto.getProductName());
         product.setCreatedBy(productdto.getCreatedBy());
         product.setCreatedOn(new Date());
+
+
+        if (productdto.getItems() != null) {
+            List<Item> itemList = new ArrayList<>();
+
+            for (ItemResponseDTO itemDto : productdto.getItems()) {
+                Item item = new Item();
+                item.setQuantity(itemDto.getQuantity());
+                item.setProduct(product);
+                itemList.add(item);
+            }
+            product.setItems(itemList);
+        }
 
         try {
             productRepository.save(product);
@@ -40,7 +58,7 @@ public class ProductService {
             throw new RuntimeException(e);
         }
 
-        return product;
+        return mapper.responseMapper(product);
     }
 
     //Get all products
@@ -66,7 +84,6 @@ public class ProductService {
     }
 
     //Deleting product from database
-
     public void deleteProduct(Long id){
         Product product = productRepository.findById(id).orElseThrow(()-> new ProductNotFound("Product not found in database please check the product id"));
         if(product != null){
