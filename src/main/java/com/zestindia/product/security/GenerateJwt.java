@@ -27,7 +27,8 @@ public class GenerateJwt {
                 .subject(username)
                 .issuer("Shantanu Jape")
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000L))
+//              .expiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000L))
+                .expiration(new Date(System.currentTimeMillis() + 40 * 1000))
                 .and()
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();

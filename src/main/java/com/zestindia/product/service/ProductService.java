@@ -83,6 +83,20 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public List<ItemResponseDTO> getItemsByProductId(Long productId) {
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFound("Product not found"));
+
+        return product.getItems().stream()
+                .map(item -> {
+                    ItemResponseDTO dto = new ItemResponseDTO();
+                    dto.setQuantity(item.getQuantity());
+                    return dto;
+                })
+                .toList();
+    }
+
     //Deleting product from database
     public void deleteProduct(Long id){
         Product product = productRepository.findById(id).orElseThrow(()-> new ProductNotFound("Product not found in database please check the product id"));
