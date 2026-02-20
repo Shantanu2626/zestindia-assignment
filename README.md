@@ -24,6 +24,16 @@ and clean layered architecture.
 
 ---
 
+## Starting application 
+ Add db_username in your environmental variable 
+ Add db_password in your environmental variable 
+
+## Docker command for starting app
+```bash
+docker-compose up
+```
+
+
 ## 🔐 Authentication Flow
 
 1. User logs in using email + password
