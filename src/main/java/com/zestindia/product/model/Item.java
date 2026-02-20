@@ -1,14 +1,13 @@
 package com.zestindia.product.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "item")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,4 +16,9 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long quantity;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "product_id")
+    private Product product;
 }
