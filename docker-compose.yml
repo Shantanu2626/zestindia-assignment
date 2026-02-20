@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    image: shantanujape/product-service:latest
+
+    ports:
+      - "8080:8080"  # Expose port 8080 for the Spring Boot app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/zestdb?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: ${db_username}
+      SPRING_DATASOURCE_PASSWORD: ${db_password}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${db_password}
+      MYSQL_DATABASE: zestindia
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
