@@ -162,6 +162,23 @@ http://localhost:8080/swagger-ui/index.html
 
 ✔ Docker
 
+
+## Improvement in this project in future 
+✔ Adding Redis for caching 
+
+✔ Pagination done by redis
+
+✔ hardcoded url set in environmental variable
+
+✔ Db connection limit
+
+✔ Lazy loading on database
+
+
+## Doubts 
+1] I have created the relationships according to the PDF, but there might be missing item names in the Items entity. It currently has only quantities, so the relationships might be incorrect
+2] Many items is related to one product or many product is related to one categories i have confusion in two condition so i have go throgh pdf
+
 ## Author
 
 Shantanu
